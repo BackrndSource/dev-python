@@ -1,0 +1,9 @@
+<h2>Área para miembros</h2>
+
+<p>
+    Bienvenido <b>{{request.user.username}}</b>, 
+    esta página es exclusiva para usuarios registrados.
+</p>
+
+<hr />
+<a href="{% url 'users:logout' %}">Cerrar sesión</a>

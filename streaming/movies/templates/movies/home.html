@@ -1,0 +1,74 @@
+{% extends 'main/list.html' %}
+{% block title %}{{data.title}}{% endblock title %}
+
+{% block list_box %}
+
+	<div class="box">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h3>upcoming_list_title</h3>
+				</div>
+			</div>
+			{% block upcoming_list_container %}
+                <div class="row">
+                    {% for item in data.upcoming_list %}
+                        <div class="poster col-6 col-sm-4 col-md-3 col-lg-2">
+                            <a href="{% url 'movies:home' %}{{item.id}}/{{item.slug}}">
+                                <div class="poster-img" style="background-image:url({{item.poster_path}})"></div>
+                            </a>
+                            <span class="title" width="auto">{{item.title}}</span>
+                            <span class="year" width="auto">{{item.release_year}}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endblock upcoming_list_container %}
+		</div>
+	</div>
+	<div class="box box-tr">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h3>popular_list_title</h3>
+				</div>
+			</div>
+			{% block popular_list_container %}
+                <div class="row">
+					{% for item in data.popular_list %}
+                        <div class="poster col-6 col-sm-4 col-md-3 col-lg-2">
+                            <a href="{% url 'movies:home' %}{{item.id}}/{{item.slug}}">
+                                <div class="poster-img" style="background-image:url({{item.poster_path}})"></div>
+                            </a>
+                            <span class="title" width="auto">{{item.title}}</span>
+                            <span class="year" width="auto">{{item.release_year}}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endblock popular_list_container %}
+		</div>
+	</div>
+	<div class="box box-tr">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h3>top_rated_list_title</h3>
+				</div>
+			</div>
+			{% block top_rated_list_container %}
+                <div class="row">
+                    {% for item in data.top_rated_list %}
+                        <div class="poster col-6 col-sm-4 col-md-3 col-lg-2">
+                            <a href="{% url 'movies:home' %}{{item.id}}/{{item.slug}}">
+                                <div class="poster-img" style="background-image:url({{item.poster_path}})"></div>
+                            </a>
+                            <span class="title" width="auto">{{item.title}}</span>
+                            <span class="year" width="auto">{{item.release_year}}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endblock top_rated_list_container %}
+		</div>
+	</div>
+
+
+{% endblock list_box %}

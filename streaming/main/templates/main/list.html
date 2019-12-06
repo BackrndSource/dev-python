@@ -1,0 +1,84 @@
+{% extends 'main/base.html' %}
+
+{% block content %}  
+
+    {% block param_block %}
+    {% endblock param_block %}
+    
+    {% block genres_box %}
+        {% if data.genre_list %}
+            <div class="box bg-tr" id="box_advancedsearch_genre">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            {% for genre in data.genre_list %}
+                                <a href="{{request.get_path}}?genre={% if genre.id in data.genre_active_list %}{% for genre_active in data.genre_active_list %}{% if genre_active != genre.id %}{{genre_active}},{% endif %}{% endfor %}{% else %}{% for genre_active in data.genre_active_list %}{{genre_active}},{% endfor %}{{genre.id}},{% endif %}">
+                                <button class="btn btn-primary {% if genre.id in data.genre_active_list %}active{% endif %}">{{genre.name}}</button></a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endblock genres_box %}
+
+	{% block result_list_box %}
+	<div class="box bg-tr">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h3>{% block list_title %}{% endblock list_title %}</h3>
+				</div>
+			</div>
+			{% block list_container %}
+                <div class="row">
+                    {% with data.result_list as result_list %}
+                        {% include 'main/list_item.html' %}
+                    {% endwith %}
+                </div>
+            {% endblock list_container %}
+		</div>
+	</div>
+    {% endblock result_list_box %}
+
+	{% block add_box %}{% endblock add_box %}
+
+    {% block pagination_box %}
+        {% if data.pagination %}
+            <div class="box bg-tr">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <nav aria-label="pagination">
+                                <ul class="pagination">
+                                    {% block pagination_item_first %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{% url data.view_path page=1 %}{% if request.GET.genre %}?genre={{request.GET.genre}}{% endif %}" aria-label="First">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">First</span>
+                                            </a>
+                                        </li>
+                                    {% endblock pagination_item_first %}
+                                    {% for page_num in data.pagination %}
+                                        {% block pagination_item %}
+                                                <li class="page-item {% if data.page == page_num %}active{% endif %}"><a class="page-link" href="{% url data.view_path page=page_num %}{% if request.GET.genre %}?genre={{request.GET.genre}}{% endif %}">{{page_num}}</a></li>
+                                        {% endblock pagination_item %}
+                                    {% endfor %}
+                                    {% block pagination_item_last %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{% url data.view_path page=500 %}{% if request.GET.genre %}?genre={{request.GET.genre}}{% endif %}" aria-label="Last">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Last</span>
+                                            </a>
+                                        </li>
+                                    {% endblock pagination_item_last %}
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endblock pagination_box %}
+
+{% endblock content %}

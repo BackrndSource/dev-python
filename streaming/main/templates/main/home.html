@@ -1,0 +1,55 @@
+{% extends 'main/list.html' %}
+
+{% block result_list_box %}
+
+	<div class="box">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h3>upcoming_list_title</h3>
+				</div>
+			</div>
+			{% block upcoming_list_container %}
+                <div class="row">
+                    {% with data.upcoming_list as result_list %}
+                        {% include 'main/list_item.html' %}
+                    {% endwith %}
+                </div>
+            {% endblock upcoming_list_container %}
+		</div>
+	</div>
+	<div class="box bg-tr">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h3>popular_list_title</h3>
+				</div>
+			</div>
+			{% block popular_list_container %}
+                <div class="row">
+					{% with data.popular_list as result_list %}
+                        {% include 'main/list_item.html' %}
+                    {% endwith %}
+                </div>
+            {% endblock popular_list_container %}
+		</div>
+	</div>
+	<div class="box bg-tr">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<h3>top_rated_list_title</h3>
+				</div>
+			</div>
+			{% block top_rated_list_container %}
+                <div class="row">
+                    {% with data.top_rated_list as result_list %}
+                        {% include 'main/list_item.html' %}
+                    {% endwith %}
+                </div>
+            {% endblock top_rated_list_container %}
+		</div>
+	</div>
+
+
+{% endblock result_list_box %}

@@ -1,0 +1,259 @@
+{% extends 'main/base.html' %}
+{% block title %}{{data.details.title}}{% endblock title %}
+
+{% block content %}
+	<div id="detail_box_1" class="box bg-img" style="{{data.details.backdrop_css}}">
+		<div class="container bg-bottom-shadow mw-none">
+			<div class="row mt-20">
+				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3">
+					<img class="poster-img" src="{{data.details.poster_url_w500}}"></img>
+				</div>
+				<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+								<h1>{{data.details.name}}</h1>
+							</div>
+						</div>
+						<div class="row overflow-auto h-175 mt-20">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div>{{data.details.biography}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+					<nav class="nav flex-column nav-pills">
+						<a class="nav-link active" href="#" onclick="">Siguiendo</a>
+						<a class="nav-link" href="#" onclick="">Pendiente</a>
+						<a class="nav-link" href="#" onclick="">Favorita</a>
+						<a class="nav-link" href="#" onclick="">Finalizada</a>
+						<a class="nav-link" href="#" onclick="">Abandonada</a>
+					</nav>
+				</div>
+			</div>
+			<div class="row mt-20">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<nav class="nav nav-tabs" id="myTab" role="tablist">
+						<a class="nav-link active" href="#info" data-toggle="tab" role="tab" aria-controls="info" aria-selected="true">Info</a>
+						<a class="nav-link" href="#trailers" data-toggle="tab" role="tab" aria-controls="trailers" aria-selected="false">Trailers</a>
+						<a class="nav-link" href="#crew" data-toggle="tab" role="tab" aria-controls="crew" aria-selected="false">As Crew</a>
+						<a class="nav-link" href="#cast" data-toggle="tab" role="tab" aria-controls="cast" aria-selected="false">As Cast</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="detail_box_2" class="box">
+		<div class="container mw-none">
+			<div class="row">
+				<div class="col-12">
+					<div class="tab-content" id="myTabContent">
+						<div id="info" class="tab-pane fade show active" role="tabpanel" aria-labelledby="info-tab">
+							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+								<div class="card-body">
+									<p class="card-text">Birthday</p>
+									<h5 class="card-title"><i>{{data.details.birthday}}</i></h5>
+								</div>
+							</div>
+							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+								<div class="card-body">
+									<p class="card-text">Deathday</p>
+									<h5 class="card-title"><i>{{data.details.deathday}}</i></h5>
+								</div>
+							</div>
+							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+								<div class="card-body">
+									<p class="card-text">known_for_department</p>
+									<h5 class="card-title"><i>{{data.details.known_for_department}}</i></h5>
+								</div>
+							</div>
+							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+								<div class="card-body">
+									<p class="card-text">also_known_as</p>
+									<h5 class="card-title"><i>{% for nick in data.details.also_known_as %}{{nick}}<br>{% endfor %}</i></h5>
+								</div>
+							</div>
+							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+								<div class="card-body">
+									<p class="card-text">imdb</p>
+									<h5 class="card-title"><i>{{data.details.imdb_id}}</i></h5>
+								</div>
+							</div>
+							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+								<div class="card-body">
+									<p class="card-text"><i class="fas fa-fire-alt"></i> Popularity</p>
+									<h5 class="card-title"><i>{{data.details.popularity}}</i></h5>
+								</div>
+							</div>
+							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+								<div class="card-body">
+									<p class="card-text">place_of_birth</p>
+									<h5 class="card-title"><i>{{data.details.place_of_birth}}</i></h5>
+								</div>
+							</div>
+							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+								<div class="card-body">
+									<p class="card-text"><i class="fas fa-home"></i> Homepage</p>
+									<h5 class="card-title"><i><a target="_blank" href="{{data.details.homepage}}">{{data.details.homepage}}</a></i></h5>
+								</div>
+							</div>
+						</div>
+						<div id="trailers" class="tab-pane fade" role="tabpanel" aria-labelledby="trailers-tab">
+							{% if data.details.trailer_embed %}
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item" src="{{data.details.trailer_embed}}" allowfullscreen></iframe>
+								</div>
+							{% else %}
+								{% include 'main/no_results.html' %}
+							{% endif %}
+						</div>
+						<div id="cast" class="container tab-pane fade" role="tabpanel" aria-labelledby="cast-tab">
+							{% if data.details.credits.cast %}
+								<div class="row">
+									{% with data.details.credits.cast as result_list %}
+										{% include 'people/list_item.html' %}
+									{% endwith %}
+								</div>
+							{% else %}
+								{% include 'main/no_results.html' %}
+							{% endif %}
+						</div>
+						<div id="crew" class="container tab-pane fade" role="tabpanel" aria-labelledby="crew-tab">
+							{% if data.details.credits.crew %}
+								<div class="row">
+									{% with data.details.credits.crew as result_list %}
+										{% include 'people/list_item.html' %}
+									{% endwith %}
+								</div>
+							{% else %}
+								{% include 'main/no_results.html' %}
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% block links_detail_box %}
+		<div id ="detail_sites_box" class="box">
+			<div class="container mw-none">
+				<div class="row">
+					<div class="col-12">
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">Site</th>
+									<th scope="col">Description</th>
+									<th scope="col">Rated</th>
+									<th scope="col">Like</th>
+									<th scope="col">Report</th>
+								</tr>
+							</thead>
+							<tbody>
+							{% for site in data.site_list %}
+								<tr>
+									<th scope="row">
+										<a target="_blank" href="{{site.search_url}}">{{site.name}}</a>
+									</th>
+									<td>{{site.description}}</td>
+									<td>+1</td>
+									<td>Like</td>
+									<td>Report</td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endblock links_detail_box %}
+
+	{% block collection_detail_box %}
+		{% if data.collection %}
+			<div id="detail_collection_box" class="box bg-img" style="{{data.collection.backdrop_style}}">
+				<div class="container" >
+					<div class="row">
+						<div class="col-12">
+							<h3>{{data.collection.name}}</h3>
+						</div>
+					</div>
+					<div class="row">
+						{% with data.collection.parts as result_list %}
+							{% include 'main/list_item.html' %}
+						{% endwith %}
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	{% endblock collection_detail_box %}
+
+	{% block similar_detail_box %}
+		{% if data.similar_list %}
+			<div class="box bg-tr" id="box_similar">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<h3>Similar</h3>
+						</div>
+					</div>
+					<div class="row">
+						{% with data.similar_list as result_list %}
+							{% include 'main/list_item.html' %}
+						{% endwith %}
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	{% endblock similar_detail_box %}
+
+	{% block recommendations_detail_box %}
+		{% if data.recommendations_list %}
+			<div class="box bg-tr" id="box_recommendations">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<h3>Recommendations</h3>
+						</div>
+					</div>
+					<div class="row">
+						{% with data.recommendations_list as result_list %}
+							{% include 'main/list_item.html' %}
+						{% endwith %}
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	{% endblock recommendations_detail_box %}
+
+{% endblock content %}
+{% block footer_javascript_page %}
+	<script type="text/javascript">
+		function showTrailer(){
+			$("#trailer").show();
+			$("#extrainfo").hide();
+		}
+
+		function showExtraInfo(){
+			$("#extrainfo").show();
+			$("#trailer").hide();
+		}
+
+		function showCast(){
+			$("#box_cast_info").show();
+			$("#box_crew_info").hide();
+		}
+
+		function showCrew(){
+			$("#box_crew_info").show();
+			$("#box_cast_info").hide();
+		}
+		$('.starrr').starrr({
+			rating:{{data.details.vote_average}}/2,
+			max: 5,
+			readOnly: true
+		})
+	</script>
+{% endblock footer_javascript_page %}

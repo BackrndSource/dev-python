@@ -1,0 +1,96 @@
+{% extends 'main/list.html' %}
+
+{% block param_block %}
+	<form action="{% url 'movies:search' %}" method="post" id="search_form">
+    	{% csrf_token %}
+		<input type="hidden" id="input-page" name="page" value="{% if data.page %}{{data.page}}{% else %}1{% endif %}">
+
+    	<div class="box" id="box_search">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 col-md-12 col-lg-12" id="input_container">
+						<input placeholder="Search" type="text" size="20" id="search_term" name="term" value="{% if data.term %}{{ data.term }}{% endif %}"> </input>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="box bg-tr" id="box_advancedsearch">
+			<div class="container">
+				<div class="row">
+					<div class="offset-1 col-10 col-md-10 col-lg-10">
+						<div class="btn-group btn-group-toggle" data-toggle="buttons">
+						  	<label class="btn btn-primary {% if data.type == 'movie' %}active{% endif %}" onclick="window.location.href='{% url 'movies:search' %}';"> 
+						    	<input type="radio" name="options" id="option1" autocomplete="off">search_films
+						  	</label>
+						  	<label class="btn btn-primary {% if data.type == 'tv' %}active{% endif %}" onclick="window.location.href='{% url 'movies:search' %}';"> 
+						    	<input type="radio" name="options" id="option2" autocomplete="off">search_series
+						  	</label>
+						  	<label class="btn btn-primary {% if data.type == 'people' %}active{% endif %}" onclick="window.location.href='{% url 'movies:search' %}';">
+						    	<input type="radio" name="options" id="option3" autocomplete="off">search_people
+						  	</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{% if data.genre_list %}
+			<div class="box bg-tr" id="box_advancedsearch_genre">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">	
+							<fieldset>
+								{% for genre in data.genre_list %}
+									<label class="btn btn-primary"><input type="checkbox" name="genre" value="{{genre.id}}" onclick="$(this.parentElement).toggleClass('active')" style="opacity:0; position:absolute;">{{genre.name}}</label>
+							    {% endfor %}
+							<fieldset>      
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+
+		<div class="box bg-tr" id="box_search">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 col-md-12 col-lg-12 button_container">
+						<button type="submit" form="search_form" class="btn btn-success">advanced_search</button>
+					</div>
+				</div>
+			</div>
+		</div>
+{% endblock param_block %}
+
+{% block genres_box %}{% endblock genres_box %}
+
+{% block pagination_item_first %}
+    <li class="page-item" onclick="goto_result_search_page({{1}})">
+        <a class="page-link" href="#" aria-label="First">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">First</span>
+        </a>
+    </li>
+{% endblock pagination_item_first %}
+
+{% block pagination_item %}
+    <li class="page-item {% if data.page == page_num %}active{% endif %}" onclick="goto_result_search_page({{page_num}})"><a class="page-link" href="#">{{page_num}}</a></li>
+{% endblock pagination_item %}
+
+{% block pagination_item_last %}
+    <li class="page-item" onclick="goto_result_search_page({{500}})">
+        <a class="page-link" href="#" aria-label="Last">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Last</span>
+        </a>
+    </li>
+{% endblock pagination_item_last %}
+
+{% block footer_javascript_page %}
+	<script type="text/javascript">
+		function goto_result_search_page(page_num){
+			$('#input-page').attr('value', page_num); 
+			$('#search_form').submit();
+		}
+	</script>
+{% endblock footer_javascript_page %}

@@ -1,0 +1,12 @@
+{% for item in result_list %}
+    <div class="poster col-6 col-sm-4 col-md-3 col-lg-2">
+        <a href="{% url data.view_path_base %}{{item.id}}/{{item.slug}}">
+            <div class="poster-img" style="background-image:url({{item.poster_url_w500}})" data-toggle="popover" data-trigger="hover" title="{{item.title}}" data-content="{{item.overview}}">
+	        	<span class="year badge badge-primary">{{item.release_year}}</span>
+	        	<span class="rating badge badge-warning">{{item.vote_average}}</span>
+            </div>
+	        <span class="title">{{item.title}}</span>
+	        <span class="subtitle" width="auto">{{item.subtitle}}</span>
+        </a>
+    </div>
+{% endfor %}

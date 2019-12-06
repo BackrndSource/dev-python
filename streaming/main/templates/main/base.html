@@ -1,0 +1,129 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{{data.title}}{% endblock title %} | VoirStreaming</title>
+        {% block head_favicon %}
+            <link rel="icon" type="image/png"
+                  href="{% static 'img/movies-icon-6.jpg' %}">
+        {% endblock head_favicon %}
+        {% block head_meta %}
+            {% block head_meta_charset %}
+                <meta http-equiv="Content-Type"
+                      content="text/html; charset=utf-8" />
+            {% endblock head_meta_charset %}
+            {% block head_meta_contentlanguage %}
+                <meta http-equiv="Content-Language" value="en-US" />
+            {% endblock head_meta_contentlanguage %}
+            {% block head_meta_viewport %}
+                <meta name="viewport"
+                      content="width=device-width, initial-scale=1.0">
+            {% endblock head_meta_viewport %}
+        {% endblock head_meta %}
+        {% block head_css %}
+            {% block head_css_site %}
+                <link href="{% static 'css/normalize.css' %}" media="all" rel="stylesheet" type="text/css" />
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+                <link href="{% static 'css/starrr.css' %}" media="all" rel="stylesheet" type="text/css" />
+                <link href="{% static 'css/fontawesome.all.min.css' %}" media="all" rel="stylesheet" type="text/css" />
+                <link href="{% static 'css/app.css' %}" media="all" rel="stylesheet" type="text/css" />     
+            {% endblock head_css_site %}
+            {% block head_css_section %}{% endblock head_css_section %}
+            {% block head_css_page %}{% endblock head_css_page %}
+        {% endblock head_css %}
+    </head>
+    <body>
+        {# Navigation Menu #}
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{% url 'main:home' %}">
+                <img src="{% static 'img/movies-icon-6.jpg' %}" width="30" height="30" class="d-inline-block align-top" alt="voirstreaming.fr">
+                VoirStreaming.fr
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <form class="form-inline mr-auto mt-2 mt-lg-0" action="{% url 'movies:search' %}" method="post" id="navbar_search_form">
+                    {% csrf_token %}
+                    <input class="form-control mr-sm-2" type="search" name="term" id="navbar_search_term" placeholder="...">
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" form="navbar_search_form">Search</button>
+                </form>
+                <ul class="navbar-nav my-2 my-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-film"></i> Movies
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'movies:home' %}"><i class="fas fa-home"></i> Home</a>
+                            <a class="dropdown-item" href="{% url 'movies:upcoming' %}"><i class="fas fa-stopwatch"></i> Upcoming</a>
+                            <a class="dropdown-item" href="{% url 'movies:popular' %}"><i class="fas fa-fire-alt"></i> Popular</a>
+                            <a class="dropdown-item" href="{% url 'movies:top_rated' %}"><i class="fas fa-star"></i> Top Rated</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-tv"></i> Series
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="{% url 'series:home' %}"><i class="fas fa-home"></i> Home</a>
+                            <a class="dropdown-item" href="{% url 'series:upcoming' %}"><i class="fas fa-stopwatch"></i> Upcoming</a>
+                            <a class="dropdown-item" href="{% url 'series:popular' %}"><i class="fas fa-fire-alt"></i> Popular</a>
+                            <a class="dropdown-item" href="{% url 'series:top_rated' %}"><i class="fas fa-star"></i> Top Rated</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-users"></i> People</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Account
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="{% url 'users:account' %}"><i class="fas fa-user-circle"></i> Profil</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-user-cog"></i> Config</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-list"></i> Lists</a>
+                                <a class="dropdown-item" href="{% url 'users:logout' %}"><i class="fas fa-running"></i> Logout</a>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:register' %}">Sign Up</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+
+        {# The Document Body #}
+        {% block content %}{% endblock content %}
+
+        {# The Footer #}
+        <footer>{% block footer_content %}{% endblock footer_content %}</footer>
+    </body>
+    {# Set of blocks that can be used to display JavaScript files #}
+    {% block footer_javascript %}
+        {% block footer_javascript_site %}
+            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+            <script src="{% static 'js/starrr.js' %}" type="text/javascript"></script>
+            <script src="{% static 'js/app.js' %}" type="text/javascript"></script>
+
+            <!-- Global site tag (gtag.js) - Google Analytics-->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-136710212-1"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'UA-136710212-1');
+            </script>
+        {% endblock footer_javascript_site %}
+        {% block footer_javascript_section %}{% endblock footer_javascript_section %}
+        {% block footer_javascript_page %}{% endblock footer_javascript_page %}
+    {% endblock footer_javascript %}
+</html>
