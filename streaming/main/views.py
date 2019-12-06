@@ -40,7 +40,7 @@ class TmdbView(View):
 	def prepare_context(self):
 		self.context['data']['title'] = self.title
 		self.context['data']['view_path'] = self.view_path
-		self.context['data']['view_path_base'] = self.view_path.split(':')[0] + ':home'
+		self.context['data']['view_path_base'] = self.view_path.split(':')[0]
 		self.context['data']['genre_list'] = self.genre_list
 
 	def prepare_result_list(self, result_list):
@@ -63,14 +63,11 @@ class TmdbView(View):
 
 	def parse_tmdb_item(self, item):
 		'''
-		Needs to set 
-		 - title
-		 - subtitle
-
 		Adds to item:
 			- poster_url_w500
 			- release_year
 			- slug
+		 	- subtitle
 		'''
 		# Series
 		if hasattr(item, 'first_air_date'):
@@ -91,9 +88,7 @@ class TmdbView(View):
 			item.poster_url_w500 = self.get_poster_url_w500(item.poster_path)
 		if hasattr(item, 'title'):
 			item.slug = re.sub('[^A-z0-9\s]','',unidecode.unidecode(item.title)).lower().replace('  ', ' ').replace(' ', '-')
-			
 		if hasattr(item, 'release_date'):
-			#item.subtitle = item.release_date.split('-', 1)[0]
 			item.release_year = item.release_date.split('-', 1)[0]
 
 	def get_poster_url_w500(self, poster_path):
@@ -336,8 +331,6 @@ class SearchView(TmdbListView):
 
 	def prepare_context_list(self):
 		if self.term != None and self.term != '':
-			self.context['data']['result_list'] = self.get_result_list()[:self.result_list_limit]
 			self.context['data']['term'] = self.term
 			self.paginate = True
-
-		super().prepare_context_list()
+			super().prepare_context_list()

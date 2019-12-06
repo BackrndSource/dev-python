@@ -11,6 +11,10 @@ class MoviesListMixin():
         self.genre_list = Genre().movie_list()
         return super().get(request, *args, **kwargs)
 
+    def post(self, request, *args, **kwargs):
+        self.genre_list = Genre().movie_list()
+        return super().post(request, *args, **kwargs)
+
 
 class MoviesHomeView(MoviesListMixin, DiscoverView):
     title = 'Movies Home'
@@ -71,12 +75,14 @@ class MoviesTopRatedView(MoviesListMixin, DiscoverView):
 
 class MoviesSearchView(MoviesListMixin, SearchView):
     title='Search Movies'
+    view_path = 'movies:search'
 
     def get_result_list(self):
-        return self.prepare_result_list(Movie().search(self.term, self.page))
+        self.result_list = self.prepare_result_list(Movie().search(self.term, self.page))
 
 
 class MoviesDetailView(TmdbDetailView):
+    template_name = 'movies/detail.html'
     view_path = 'movies:detail'
 
     def prepare_context_detail(self):

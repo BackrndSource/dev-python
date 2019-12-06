@@ -33,7 +33,9 @@
 			{% block list_container %}
                 <div class="row">
                     {% with data.result_list as result_list %}
-                        {% include 'main/list_item.html' %}
+                        {% with data.view_path_base|add:'/list_item.html' as template %}
+                            {% include template %}
+                        {% endwith %}
                     {% endwith %}
                 </div>
             {% endblock list_container %}

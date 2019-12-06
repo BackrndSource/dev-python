@@ -8,6 +8,10 @@ class SeriesListMixin():
         self.genre_list = Genre().tv_list()
         return super().get(request, *args, **kwargs)
 
+    def post(self, request, *args, **kwargs):
+        self.genre_list = Genre().tv_list()
+        return super().post(request, *args, **kwargs)
+
 
 class SeriesHomeView(SeriesListMixin, DiscoverView):
     title = 'Series Home'
@@ -68,12 +72,15 @@ class SeriesTopRatedView(SeriesListMixin, DiscoverView):
 
 class SeriesSearchView(SeriesListMixin, SearchView):
     title='Search Series'
+    view_path = 'series:search'
 
     def get_result_list(self):
-        return self.prepare_result_list(TV().search(self.term, self.page))
+        self.result_list = self.prepare_result_list(TV().search(self.term, self.page))
 
 
 class SeriesDetailView(TmdbDetailView):
+    template_name = 'series/detail.html'
+    view_path = 'series:detail'
 
     def get_result_detail(self):
         return TV().details(self.id, 'append_to_response=videos,credits')

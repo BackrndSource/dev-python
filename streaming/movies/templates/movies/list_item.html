@@ -1,9 +1,12 @@
 {% for item in result_list %}
     <div class="poster col-6 col-sm-4 col-md-3 col-lg-2">
-        <a href="/{{data.view_path_base}}/{{item.id}}/{{item.slug}}">
-            <div class="poster-img" style="background-image:url({{item.poster_url_w500}})"></div>
+        <a href="{% url 'movies:home' %}{{item.id}}/{{item.slug}}">
+            <div class="poster-img" style="background-image:url({{item.poster_url_w500}})" data-toggle="popover" data-trigger="hover" title="{{item.title}}" data-content="{{item.overview}}">
+	        	<span class="year badge badge-primary">{{item.release_year}}</span>
+	        	<span class="rating badge badge-warning">{{item.vote_average}}</span>
+            </div>
+	        <span class="title">{{item.title}}</span>
+	        <span class="subtitle" width="auto">{{item.subtitle}}</span>
         </a>
-        <span class="title" width="auto">{{item.title}}</span>
-        <span class="year" width="auto">{{item.release_year}}</span>
     </div>
 {% endfor %}

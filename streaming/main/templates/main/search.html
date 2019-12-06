@@ -1,7 +1,7 @@
 {% extends 'main/list.html' %}
 
 {% block param_block %}
-	<form action="{% url 'movies:search' %}" method="post" id="search_form">
+	<form action="{% url data.view_path %}" method="post" id="search_form">
     	{% csrf_token %}
 		<input type="hidden" id="input-page" name="page" value="{% if data.page %}{{data.page}}{% else %}1{% endif %}">
 
@@ -23,10 +23,10 @@
 						  	<label class="btn btn-primary {% if data.type == 'movie' %}active{% endif %}" onclick="window.location.href='{% url 'movies:search' %}';"> 
 						    	<input type="radio" name="options" id="option1" autocomplete="off">search_films
 						  	</label>
-						  	<label class="btn btn-primary {% if data.type == 'tv' %}active{% endif %}" onclick="window.location.href='{% url 'movies:search' %}';"> 
+						  	<label class="btn btn-primary {% if data.type == 'tv' %}active{% endif %}" onclick="window.location.href='{% url 'series:search' %}';"> 
 						    	<input type="radio" name="options" id="option2" autocomplete="off">search_series
 						  	</label>
-						  	<label class="btn btn-primary {% if data.type == 'people' %}active{% endif %}" onclick="window.location.href='{% url 'movies:search' %}';">
+						  	<label class="btn btn-primary {% if data.type == 'people' %}active{% endif %}" onclick="window.location.href='{% url 'people:search' %}';">
 						    	<input type="radio" name="options" id="option3" autocomplete="off">search_people
 						  	</label>
 						</div>

@@ -2,7 +2,7 @@
 
 {% block result_list_box %}
 
-	<div class="box">
+	<div class="box bg-white">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
@@ -11,8 +11,10 @@
 			</div>
 			{% block upcoming_list_container %}
                 <div class="row">
-                    {% with data.upcoming_list as result_list %}
-                        {% include 'main/list_item.html' %}
+                	{% with data.upcoming_list as result_list %}
+                        {% with data.view_path_base|add:'/list_item.html' as template %}
+                            {% include template %}
+                        {% endwith %}
                     {% endwith %}
                 </div>
             {% endblock upcoming_list_container %}
@@ -27,8 +29,10 @@
 			</div>
 			{% block popular_list_container %}
                 <div class="row">
-					{% with data.popular_list as result_list %}
-                        {% include 'main/list_item.html' %}
+                	{% with data.popular_list as result_list %}
+                        {% with data.view_path_base|add:'/list_item.html' as template %}
+                            {% include template %}
+                        {% endwith %}
                     {% endwith %}
                 </div>
             {% endblock popular_list_container %}
@@ -43,8 +47,10 @@
 			</div>
 			{% block top_rated_list_container %}
                 <div class="row">
-                    {% with data.top_rated_list as result_list %}
-                        {% include 'main/list_item.html' %}
+                	{% with data.top_rated_list as result_list %}
+                        {% with data.view_path_base|add:'/list_item.html' as template %}
+                            {% include template %}
+                        {% endwith %}
                     {% endwith %}
                 </div>
             {% endblock top_rated_list_container %}
