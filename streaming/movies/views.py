@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from tmdbv3api import Movie, Discover, Genre
 from main.views import DiscoverView, TmdbDetailView, SearchView
+from sites.models import Site
+from django.db.models import Q
 import time
 
 
@@ -14,6 +16,13 @@ class MoviesListMixin():
     def post(self, request, *args, **kwargs):
         self.genre_list = Genre().movie_list()
         return super().post(request, *args, **kwargs)
+
+
+class MoviesDetailMixin():
+
+    def prepare_site_list(self):
+        self.site_list = Site.objects.filter(Q(type="0") | Q(type="1"))
+        super().prepare_site_list()
 
 
 class MoviesHomeView(MoviesListMixin, DiscoverView):
@@ -81,7 +90,7 @@ class MoviesSearchView(MoviesListMixin, SearchView):
         self.result_list = self.prepare_result_list(Movie().search(self.term, self.page))
 
 
-class MoviesDetailView(TmdbDetailView):
+class MoviesDetailView(MoviesDetailMixin, TmdbDetailView):
     template_name = 'movies/detail.html'
     view_path = 'movies:detail'
 

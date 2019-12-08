@@ -1,5 +1,7 @@
 from tmdbv3api import TV, Discover, Genre
 from main.views import DiscoverView, TmdbDetailView, SearchView
+from sites.models import Site
+from django.db.models import Q
 import time
 
 class SeriesListMixin():
@@ -11,6 +13,13 @@ class SeriesListMixin():
     def post(self, request, *args, **kwargs):
         self.genre_list = Genre().tv_list()
         return super().post(request, *args, **kwargs)
+
+
+class SeriesDetailMixin():
+
+    def prepare_site_list(self):
+        self.site_list = Site.objects.filter(Q(type="0") | Q(type="2"))
+        super().prepare_site_list()
 
 
 class SeriesHomeView(SeriesListMixin, DiscoverView):
@@ -78,9 +87,12 @@ class SeriesSearchView(SeriesListMixin, SearchView):
         self.result_list = self.prepare_result_list(TV().search(self.term, self.page))
 
 
-class SeriesDetailView(TmdbDetailView):
+class SeriesDetailView(SeriesDetailMixin, TmdbDetailView):
     template_name = 'series/detail.html'
     view_path = 'series:detail'
 
-    def get_result_detail(self):
-        return TV().details(self.id, 'append_to_response=videos,credits')
+    def prepare_context_detail(self):
+        self.details = TV().details(self.id, 'append_to_response=videos,credits')
+        self.similar_list = TV().similar(self.id)
+        self.recommendations_list = TV().recommendations(self.id)
+        super().prepare_context_detail()

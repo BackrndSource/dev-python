@@ -138,9 +138,9 @@ class TmdbDetailView(TmdbView):
 
 	def prepare_context_detail(self):
 		self.context['data']['details'] = self.prepare_result_detail(self.details)
-		self.prepare_context_sites()
+		self.prepare_site_list()
 		self.context['data']['site_list'] = self.site_list
-		self.prepare_context_collection()
+		self.prepare_collection()
 		self.context['data']['collection'] = self.collection
 		
 		if self.similar_list:
@@ -179,17 +179,12 @@ class TmdbDetailView(TmdbView):
 		
 		return details
 
-	def prepare_context_sites(self):
-		self.site_list = Site.objects.all()
-
-		for site in self.site_list:
-			# Compose the urls for the sites
-			if hasattr(self.details, 'title'):
+	def prepare_site_list(self):
+		if self.site_list:
+			for site in self.site_list:
 				site.search_url = site.get_search_url(self.details.title)
-			elif hasattr(self.details, 'name'):
-				site.search_url = site.get_search_url(self.details.name)
 
-	def prepare_context_collection(self):
+	def prepare_collection(self):
 		if hasattr(self.details, 'belongs_to_collection'):
 			if self.details.belongs_to_collection:
 				collection = Collection().details(self.details.belongs_to_collection['id'])
