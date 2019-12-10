@@ -3,6 +3,7 @@ from django.urls import reverse
 from tmdbv3api import Movie, Discover, Genre
 from main.views import DiscoverView, TmdbDetailView, SearchView
 from sites.models import Site
+from links.models import Link
 from django.db.models import Q
 import time
 
@@ -19,9 +20,14 @@ class MoviesListMixin():
 
 
 class MoviesDetailMixin():
+    type = 1
 
     def prepare_site_list(self):
-        self.site_list = Site.objects.filter(Q(type="0") | Q(type="1"))
+        self.site_list = Site.objects.filter(Q(type=0) | Q(type=self.type))
+        super().prepare_site_list()
+
+    def prepare_link_list(self):
+        self.link_list = Link.objects.filter(Q(post__tmdb_id=self.id) | Q(post__type=self.type))
         super().prepare_site_list()
 
 
