@@ -1,13 +1,34 @@
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.utils import OperationalError
 from django.urls import path
 from .views import SeriesHomeView, SeriesDetailView, SeriesSearchView, SeriesPopularView, SeriesUpcomingView, SeriesTopRatedView
 from main.models import Setting
 
-app_name = 'series'
-search = Setting.objects.get(name='slug-series-search').value
-popular = Setting.objects.get(name='slug-series-popular').value
-upcoming = Setting.objects.get(name='slug-series-upcoming').value
-top_rated = Setting.objects.get(name='slug-series-toprated').value
+try:
+    search = Setting.objects.get(name='slug-series-search').value
+except (OperationalError, ObjectDoesNotExist) as e:
+    search = 'search'
+    pass
+    
+try:
+    popular = Setting.objects.get(name='slug-series-popular').value
+except (OperationalError, ObjectDoesNotExist) as e:
+    popular = 'popular'
+    pass
 
+try:
+    upcoming = Setting.objects.get(name='slug-series-upcoming').value
+except (OperationalError, ObjectDoesNotExist) as e:
+    upcoming = 'upcoming'
+    pass
+
+try:
+    top_rated = Setting.objects.get(name='slug-series-toprated').value
+except (OperationalError, ObjectDoesNotExist) as e:
+    top_rated = 'top_rated'
+    pass
+
+app_name = 'series'
 urlpatterns = [
     path('', SeriesHomeView.as_view(), name='home'),
     path('<int:id>/', SeriesDetailView.as_view(), name='detail'),

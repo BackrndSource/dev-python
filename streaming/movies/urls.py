@@ -1,13 +1,34 @@
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.utils import OperationalError
 from django.urls import path
 from .views import MoviesHomeView, MoviesDetailView, MoviesSearchView, MoviesPopularView, MoviesUpcomingView, MoviesTopRatedView
 from main.models import Setting
 
-app_name = 'movies'
-search = Setting.objects.get(name='slug-movies-search').value
-popular = Setting.objects.get(name='slug-movies-popular').value
-upcoming = Setting.objects.get(name='slug-movies-upcoming').value
-top_rated = Setting.objects.get(name='slug-movies-toprated').value
+try:
+    search = Setting.objects.get(name='slug-movies-search').value
+except (OperationalError, ObjectDoesNotExist) as e:
+    search = 'search'
+    pass
 
+try:
+    popular = Setting.objects.get(name='slug-movies-popular').value
+except (OperationalError, ObjectDoesNotExist) as e:
+    popular = 'popular'
+    pass
+
+try:
+    upcoming = Setting.objects.get(name='slug-movies-upcoming').value
+except (OperationalError, ObjectDoesNotExist) as e:
+    upcoming = 'upcoming'
+    pass
+
+try:
+    top_rated = Setting.objects.get(name='slug-movies-toprated').value
+except (OperationalError, ObjectDoesNotExist) as e:
+    top_rated = 'top_rated'
+    pass
+
+app_name = 'movies'
 urlpatterns = [
     path('', MoviesHomeView.as_view(), name='home'),
     path('<int:id>/', MoviesDetailView.as_view(), name='detail'),
