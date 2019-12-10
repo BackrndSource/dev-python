@@ -17,15 +17,6 @@ LANGS = (
 	('fr', 'fr-FR'),
 	('es', 'es-ES'),
 )
-REPORT_TYPE = (
-	(1, 'Site Offline'),
-	(2, 'Site is false or scam'),
-	(3, 'Site is redirecting to a new site'),
-	(4, 'Dificult to find links inside the site. Need instructions'),
-	(5, 'Domain is changed, but still working. Example: site.com to site.link'),
-	(6, 'Site infected with virus'),
-	(7, 'Too much publicity'),
-)
 # s = Site(name='VoirStreaming.fr', base_url='https://voirstreaming.com/search/%s')
 # s.save()
 class Site(models.Model):
@@ -35,7 +26,7 @@ class Site(models.Model):
 	base_url=models.CharField(max_length=200)
 	base_type=models.IntegerField(default=0, choices=BASE_TYPE)
 	lang=models.CharField(default='en', max_length=2, choices=LANGS)
-	description=models.CharField(default='', max_length=200)
+	description=models.CharField(default='', max_length=200, blank=True)
 
 	def __str__(self):
 		return self.name
@@ -61,12 +52,31 @@ class SiteLike(models.Model):
 		return self.site.name + ' (' + self.user.username + ') [' + str(self.tmdb_id) + ']'
 
 
+class SiteReportType(models.Model):
+	description = models.CharField(max_length=200)
+
+	def __str__(self):
+		return self.description
+
+
 class SiteReport(models.Model):
 	
 	site = models.ForeignKey(Site, on_delete=models.CASCADE)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	tmdb_id = models.IntegerField(default=0)
-	type=models.IntegerField(default=0, choices=REPORT_TYPE)
+	type = models.ForeignKey(SiteReportType, on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.type + ' ' + self.site.name + ' (' + self.user.username + ') [' + str(self.tmdb_id) + ']'
+
+'''
+REPORT_TYPE = (
+	(1, 'Site Offline'),
+	(2, 'Site is false or scam'),
+	(3, 'Site is redirecting to a new site'),
+	(4, 'Dificult to find links inside the site. Need instructions'),
+	(5, 'Domain is changed, but still working. Example: site.com to site.link'),
+	(6, 'Site infected with virus'),
+	(7, 'Too much publicity'),
+)
+'''
