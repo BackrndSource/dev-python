@@ -161,43 +161,84 @@
 	</div>
 
 	{% block links_detail_box %}
-		<div id ="detail_sites_box" class="box">
-			<div class="container mw-none">
-				<div class="row">
-					<div class="col-12">
-						<table class="table">
-							<thead class="thead-dark">
-								<tr>
-									<th scope="col">Site</th>
-									<th scope="col">Description</th>
-									<th scope="col">Rated</th>
-									<th scope="col">Like</th>
-									<th scope="col">Report</th>
-								</tr>
-							</thead>
-							<tbody>
-							{% for site in data.site_list %}
-								<tr>
-									<th scope="row">
-										<a target="_blank" href="{{site.search_url}}">{{site.name}}</a>
-									</th>
-									<td>{{site.description}}</td>
-									<td>+1</td>
-									<td>Like</td>
-									<td>Report</td>
-								</tr>
-							{% endfor %}
-							</tbody>
-						</table>
+		{% if data.link_list %}
+			<div id ="detail_sites_box" class="box">
+				<div class="container mw-none">
+					<div class="row">
+						<div class="col-12">
+							<table class="table">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">Link</th>
+										<th scope="col">Lang</th>
+										<th scope="col">Subtitles</th>
+										<th scope="col">Video Quality</th>
+										<th scope="col">Audio Quality</th>
+										<th scope="col">Author</th>
+									</tr>
+								</thead>
+								<tbody>
+								{% for link in data.link_list %}
+									<tr>
+										<th scope="row">
+											<a target="_blank" href="{{link.url}}">{{link.type}}</a>
+										</th>
+										<td>{{link.lang}}</td>
+										<td>{{link.subtitles}}</td>
+										<td>{{link.video_quality}}</td>
+										<td>{{link.audio_quality}}</td>
+										<td>{{link.user.username}}</td>
+									</tr>
+								{% endfor %}
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		{% endif %}
 	{% endblock links_detail_box %}
+
+	{% block sites_detail_box %}
+		{% if data.link_list %}
+			<div id ="detail_sites_box" class="box">
+				<div class="container mw-none">
+					<div class="row">
+						<div class="col-12">
+							<table class="table">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">Site</th>
+										<th scope="col">Description</th>
+										<th scope="col">Rated</th>
+										<th scope="col">Like</th>
+										<th scope="col">Report</th>
+									</tr>
+								</thead>
+								<tbody>
+								{% for site in data.site_list %}
+									<tr>
+										<th scope="row">
+											<a target="_blank" href="{{site.search_url}}">{{site.name}}</a>
+										</th>
+										<td>{{site.description}}</td>
+										<td>+1</td>
+										<td>Like</td>
+										<td>Report</td>
+									</tr>
+								{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	{% endblock sites_detail_box %}
 
 	{% block collection_detail_box %}
 		{% if data.collection %}
-			<div id="detail_collection_box" class="box bg-img" style="{{data.collection.backdrop_style}}">
+			<div id="detail_collection_box" class="box bg-img bg-fixed" style="{{data.collection.backdrop_style}}">
 				<div class="container" >
 					<div class="row">
 						<div class="col-12">

@@ -137,6 +137,8 @@ class TmdbDetailView(TmdbView):
 		self.context['data']['details'] = self.prepare_result_detail(self.details)
 		self.prepare_site_list()
 		self.context['data']['site_list'] = self.site_list
+		self.prepare_link_list()
+		self.context['data']['link_list'] = self.link_list
 		self.prepare_collection()
 		self.context['data']['collection'] = self.collection
 		
@@ -180,6 +182,9 @@ class TmdbDetailView(TmdbView):
 		if self.site_list:
 			for site in self.site_list:
 				site.search_url = site.get_search_url(self.details.title)
+
+	def prepare_link_list(self):
+		return True
 
 	def prepare_collection(self):
 		if hasattr(self.details, 'belongs_to_collection'):
