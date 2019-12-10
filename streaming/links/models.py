@@ -3,34 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from main.models import Post
 
-'''
-LINK_TYPE = (
-	(0, 'online'),
-	(1, 'download'),
-)
-LANGS = (
-	('en', 'en-US'),
-	('fr', 'fr-FR'),
-	('es', 'es-ES'),
-)
-SUBTITLES = (
-	('no', 'No'),
-	('en', 'en-US'),
-	('fr', 'fr-FR'),
-	('es', 'es-ES'),
-)
-AUDIO_QUALITY = (
-	('HQ', 'HQ'),
-)
-VIDEO_QUALITY = (
-	('SC', 'Screener'),
-	('HD', 'HDTV'),
-	('H7', '720 HD'),
-	('H1', '1080 HD'),
-	('UH', 'ULTRA HD'),
-	('4K', '4K'),
-)
-'''
+
 class LinkType(models.Model):
 	value = models.CharField(max_length=200)
 
