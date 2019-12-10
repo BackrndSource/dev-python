@@ -73,7 +73,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-users"></i> People</a>
+                        <a class="nav-link" href="{% url 'people:home' %}"><i class="fas fa-users"></i> People</a>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item dropdown">

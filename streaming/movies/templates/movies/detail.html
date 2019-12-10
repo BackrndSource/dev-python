@@ -5,10 +5,10 @@
 	<div id="detail_box_1" class="box bg-img" style="{{data.details.backdrop_css}}">
 		<div class="container bg-bottom-shadow mw-none">
 			<div class="row mt-20">
-				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-3">
+				<div class="col-xs-12 col-sm-5 col-md-3 col-lg-2">
 					<img class="poster-img" src="{{data.details.poster_url_w500}}"></img>
 				</div>
-				<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+				<div class="col-xs-12 col-sm-7 col-md-7 col-lg-8 pl-lg-5">
 					<div class="container">
 						<div class="row">
 							<div class="col-12">
@@ -74,49 +74,49 @@
 				<div class="col-12">
 					<div class="tab-content" id="myTabContent">
 						<div id="info" class="tab-pane fade show active" role="tabpanel" aria-labelledby="info-tab">
-							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+							<div class="card">
 								<div class="card-body">
 									<p class="card-text">Original title</p>
 									<h5 class="card-title"><i>{{data.details.original_title}}</i></h5>
 								</div>
 							</div>
-							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+							<div class="card" >
 								<div class="card-body">
 									<p class="card-text">Original language</p>
 									<h5 class="card-title"><i>{{data.details.original_language}}</i></h5>
 								</div>
 							</div>
-							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+							<div class="card">
 								<div class="card-body">
 									<p class="card-text">Release date</p>
 									<h5 class="card-title"><i>{{data.details.release_date}}</i></h5>
 								</div>
 							</div>
-							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+							<div class="card">
 								<div class="card-body">
 									<p class="card-text">imdb</p>
 									<h5 class="card-title"><i>{{data.details.imdb_id}}</i></h5>
 								</div>
 							</div>
-							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+							<div class="card">
 								<div class="card-body">
 									<p class="card-text"><i class="fas fa-fire-alt"></i> Popularity</p>
 									<h5 class="card-title"><i>{{data.details.popularity}}</i></h5>
 								</div>
 							</div>
-							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+							<div class="card">
 								<div class="card-body">
 									<p class="card-text"><i class="fas fa-dollar-sign"></i> Revenue</p>
 									<h5 class="card-title"><i>{{data.details.revenue}} $</i></h5>
 								</div>
 							</div>
-							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+							<div class="card">
 								<div class="card-body">
 									<p class="card-text"><i class="fas fa-wallet"></i> Budget</p>
 									<h5 class="card-title"><i>{{data.details.budget}} $</i></h5>
 								</div>
 							</div>
-							<div class="card" style="width: 18rem; float:left; margin: 0px 5px 10px 5px">
+							<div class="card">
 								<div class="card-body">
 									<p class="card-text"><i class="fas fa-home"></i> Homepage</p>
 									<h5 class="card-title"><i><a target="_blank" href="{{data.details.homepage}}">{{data.details.homepage}}</a></i></h5>
@@ -132,24 +132,20 @@
 								{% include 'main/no_results.html' %}
 							{% endif %}
 						</div>
-						<div id="cast" class="container tab-pane fade" role="tabpanel" aria-labelledby="cast-tab">
+						<div id="cast" class="container h-scroll tab-pane fade" role="tabpanel" aria-labelledby="cast-tab">
 							{% if data.details.credits.cast %}
-								<div class="row">
-									{% with data.details.credits.cast as result_list %}
-										{% include 'people/list_item.html' %}
-									{% endwith %}
-								</div>
+								{% with data.details.credits.cast as result_list %}
+									{% include 'people/list_item_scroll.html' %}
+								{% endwith %}
 							{% else %}
 								{% include 'main/no_results.html' %}
 							{% endif %}
 						</div>
-						<div id="crew" class="container tab-pane fade" role="tabpanel" aria-labelledby="crew-tab">
+						<div id="crew" class="container h-scroll tab-pane fade" role="tabpanel" aria-labelledby="crew-tab">
 							{% if data.details.credits.crew %}
-								<div class="row">
-									{% with data.details.credits.crew as result_list %}
-										{% include 'people/list_item.html' %}
-									{% endwith %}
-								</div>
+								{% with data.details.credits.crew as result_list %}
+									{% include 'people/list_item_scroll.html' %}
+								{% endwith %}
 							{% else %}
 								{% include 'main/no_results.html' %}
 							{% endif %}

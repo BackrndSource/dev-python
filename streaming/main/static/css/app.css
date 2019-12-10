@@ -20,9 +20,14 @@ html body{
 .bg-img{
 	background-repeat: no-repeat;
   	background-size: cover;
+	background-position: center;
 	-webkit-box-shadow: inset 0px 0px 100px 10px rgba(0,0,0,1);
 	-moz-box-shadow: inset 0px 0px 100px 10px rgba(0,0,0,1);
 	box-shadow: inset 0px 0px 100px 10px rgba(0,0,0,1);
+}
+
+.bg-fixed{
+	background-attachment: fixed;
 }
 
 .bg-bottom-shadow{
@@ -57,6 +62,13 @@ html body{
 	padding: 5px 20px 0px 20px;
 	margin: 0;
 }
+.container.h-scroll{
+	overflow: auto;
+	overflow-y: hidden;
+    white-space: nowrap;
+    height: 300px;
+}
+
 /****************
 *					
 * NAVBAR
@@ -238,6 +250,12 @@ input#navbar_search_term:focus{
 	font-size: 14px;
 }
 
+#detail_box_2 .card{
+	width: auto; 
+	float:left; 
+	margin: 0px 5px 10px 5px
+}
+
 /****************	
 *					
 * MOVIE INFO COLLECTIONS BOX
@@ -249,7 +267,7 @@ input#navbar_search_term:focus{
 	color: white;
 }
 
-#detail_collection_box a{
+#detail_collection_box span.title{
 	color: white;
 }
 
@@ -375,13 +393,23 @@ input#navbar_search_term:focus{
 	height: 286px;
 }
 
-div.poster-img{
-	width: 100%; 
+.poster-scroll{
+	width: 190px;
+	height: 286px;
+	padding: 0 15px 0 15px;
+	display: inline-block;
+}
+
+.poster-img{
 	height: 240px; 
 	background-repeat: round;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+}
+
+.poster-scroll .poster-img{
+
 }
 
 div.poster-img:hover{
