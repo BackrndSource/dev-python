@@ -21,12 +21,9 @@ class TmdbView(View):
 
 	template_name = 'main/base.html'
 
-	context = {'data':{}}
-
-	def dispatch(self, request, *args, **kwargs):
-		self.context = {'data':{}} # Clean parameter. If not, context will be charged with the data of the last call ?¿
+	def __init__(self):
+		self.context = {'data':{}}
 		self.tmdb_set_up()
-		return super(TmdbView, self).dispatch(request, *args, **kwargs)
 
 	def tmdb_set_up(self):
 		self.tmdb.api_key = settings.TMDB_API_KEY
