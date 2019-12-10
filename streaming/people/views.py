@@ -21,6 +21,7 @@ class PeopleSearchView(PeopleListMixin, SearchView):
 class PeoplePopularView(PeopleListMixin, TmdbListView):
 	title='Popular People'
 	view_path = 'people:popular'
+	paginate = True
 
 	def get_result_list(self):
 		self.result_list = self.prepare_result_list(Person().popular(self.page))
