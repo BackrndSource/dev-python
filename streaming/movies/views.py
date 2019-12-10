@@ -101,7 +101,7 @@ class MoviesDetailView(MoviesDetailMixin, TmdbDetailView):
     view_path = 'movies:detail'
 
     def prepare_context_detail(self):
-        self.details = Movie().details(self.id, 'append_to_response=videos,credits')
+        self.details = Movie().details(self.id, 'videos,credits')
         self.similar_list = Movie().similar(self.id)
         self.recommendations_list = Movie().recommendations(self.id)
         super().prepare_context_detail()

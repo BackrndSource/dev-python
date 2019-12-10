@@ -98,7 +98,7 @@ class SeriesDetailView(SeriesDetailMixin, TmdbDetailView):
     view_path = 'series:detail'
 
     def prepare_context_detail(self):
-        self.details = TV().details(self.id, 'append_to_response=videos,credits')
+        self.details = TV().details(self.id, 'videos,credits')
         self.similar_list = TV().similar(self.id)
         self.recommendations_list = TV().recommendations(self.id)
         super().prepare_context_detail()
